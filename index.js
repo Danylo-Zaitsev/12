@@ -1,0 +1,14 @@
+import{a as v,S as w}from"./assets/vendor-DdMkFUeo.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const a of r.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&s(a)}).observe(document,{childList:!0,subtree:!0});function i(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function s(e){if(e.ep)return;e.ep=!0;const r=i(e);fetch(e.href,r)}})();const S="49323961-66159e96cf1899f53bae32983",E="https://pixabay.com/api/";async function u(o,t=1,i=15){const s={key:S,q:o,image_type:"photo",orientation:"horizontal",safesearch:!0,page:t,per_page:i};return(await v.get(E,{params:s})).data}const d=document.querySelector(".gallery"),f=document.querySelector(".loader"),m=document.querySelector(".load-more"),B=new w(".gallery a");function y(o){const t=o.map(({webformatURL:i,largeImageURL:s,tags:e,likes:r,views:a,comments:b,downloads:q})=>`
+      <li class="gallery-item">
+        <a class="gallery-link" href="${s}">
+          <img class="gallery-image" src="${i}" alt="${e}" />
+        </a>
+        <ul class="info">
+          <li>Likes: ${r}</li>
+          <li>Views: ${a}</li>
+          <li>Comments: ${b}</li>
+          <li>Downloads: ${q}</li>
+        </ul>
+      </li>
+    `).join("");d.insertAdjacentHTML("beforeend",t),B.refresh()}function T(){d.innerHTML=""}function g(){f.classList.add("visible")}function p(){f.classList.remove("visible")}function h(){m.style.display="block"}function c(){m.style.display="none"}let l="",n=1;const L=15,$=document.querySelector(".form");document.querySelector(".gallery");const z=document.querySelector(".load-more");document.querySelector(".loader");$.addEventListener("submit",async o=>{if(o.preventDefault(),l=o.target.elements.searchQuery.value.trim(),!l){iziToast.error({title:"Error",message:"Enter search query"});return}n=1,T(),c(),g();try{const{hits:t,totalHits:i}=await u(l,n);if(t.length===0){iziToast.warning({title:"Oops!",message:"No images found."});return}y(t),n*L<i?h():iziToast.info({title:"End",message:"You've reached the end."})}catch{iziToast.error({title:"Error",message:"Request failed."})}finally{p()}});z.addEventListener("click",async()=>{var o;n+=1,c(),g();try{const{hits:t,totalHits:i}=await u(l,n);y(t);const s=((o=document.querySelector(".gallery-item"))==null?void 0:o.getBoundingClientRect().height)||0;window.scrollBy({top:s*2,behavior:"smooth"}),n*L>=i?(c(),iziToast.info({title:"End",message:"You've reached the end."})):h()}catch{iziToast.error({title:"Error",message:"Loading more failed."})}finally{p()}});
+//# sourceMappingURL=index.js.map
